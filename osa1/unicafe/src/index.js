@@ -25,13 +25,14 @@ const Statistics = ({good, neutral, bad, total, sum}) => {
   }
   return (
   <>
-  <p>Statistics</p>
+  <table>Statistics
       <StatisticLine text='good' value={good} />
       <StatisticLine text='neutral' value={neutral} />
       <StatisticLine text='bad' value={bad} />
       <StatisticLine text='total' value={total} />
       <StatisticLine text='average' value={sum/total} />
       <StatisticLine text='positive percent' value={(good/total)*100} />
+      </table>
       </>
 )
 }
