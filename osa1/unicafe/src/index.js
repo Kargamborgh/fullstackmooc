@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom'
 
 const StatisticLine = (props) => (
 <tr>
+{props.text}
   <td>
-  {props.text} {props.value}
+   {props.value}
   </td> 
 </tr>
 )
