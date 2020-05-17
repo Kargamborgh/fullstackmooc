@@ -19,6 +19,7 @@ const randomGen = () => {
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(Array(6+1).join('0').split('').map(parseFloat))
+  let mostPointsIndex = points.indexOf(Math.max(...points))
 
   const handleNewAnecdote = () => {
 
@@ -29,8 +30,11 @@ const App = (props) => {
     let copy = [...points]
     copy[selected] +=1
     setPoints(copy)
+
+    mostPointsIndex = points.indexOf(Math.max(...points))
   }
 
+  
   return (
     <div>
       {props.anecdotes[selected]}
@@ -39,6 +43,15 @@ const App = (props) => {
       </div>
       <Button onClick={handleNewAnecdote} text='new anecdote' />
       <Button onClick={handleVote} text='upvote' />
+      <div>
+        Most upvoted anecdote:
+        <div>
+          {props.anecdotes[mostPointsIndex]}
+          <div>
+            has {points[mostPointsIndex]} upvotes
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
