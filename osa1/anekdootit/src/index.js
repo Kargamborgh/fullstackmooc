@@ -18,16 +18,27 @@ const randomGen = () => {
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(Array(6+1).join('0').split('').map(parseFloat))
 
   const handleNewAnecdote = () => {
 
     setSelected(selected - selected + randomGen())
   }
 
+  const handleVote = () => {
+    let copy = [...points]
+    copy[selected] +=1
+    setPoints(copy)
+  }
+
   return (
     <div>
       {props.anecdotes[selected]}
+      <div>
+      has {points[selected]} upvotes
+      </div>
       <Button onClick={handleNewAnecdote} text='new anecdote' />
+      <Button onClick={handleVote} text='upvote' />
     </div>
   )
 }
