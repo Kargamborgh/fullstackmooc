@@ -1,48 +1,46 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = ({ course }) => {
+const Header = ({ courses }) => {
     return (
-      <h1>{course.name}</h1>
+      <h1>{courses.name}</h1>
     )
   }
 
-const Total = ({ course }) => {
+const Total = ({ courses }) => {
    
-    const sum = course.parts.reduce((a,b) => console.log('testing',a,b) || a + b.exercises,0)
-    console.log(sum)
+    const sum = courses.parts.reduce((a,b) => a + b.exercises,0)
     return(
       <p>Number of exercises {sum}</p>
     ) 
 }
 
-const Part = (props) => {
-    //console.log('part')
+const Part = (part) => {
+    console.log(part)
   return (
     <p>
-      {props.part.name} {props.part.exercises}
+      {part.part.name} {part.part.exercises}
     </p>    
   )
 }
 
-const Content = ({ course }) => {
+const Content = ({ courses }) => {
     //console.log('tuleeks kontent')
   return (
     <div>
-      <Part part={course.parts[0]} />
-      <Part part={course.parts[1]} />
-      <Part part={course.parts[2]} />
-      <Part part={course.parts[3]} />
+        {courses.parts.map((part, i) => console.log('asd',part,i) ||
+        <Part key={part.id} part={part} />
+        )}
     </div>
   )
 }
 
-const Course = ({ course }) => {
+const Course = ({ courses }) => {
     return (
         <div>
-        <Header course={course} />
-        <Content course={course} />
-        <Total course={course} />
+        <Header courses={courses} />
+        <Content courses={courses} />
+        <Total courses={courses} />
         </div>
     )
 }
