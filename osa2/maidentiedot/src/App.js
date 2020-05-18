@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import Filter from './components/Filter'
-import Country from './components/Country'
+import MultiCountry from './components/MultiCountry'
 import SingleCountry from './components/SingleCountry'
 
 const App = () => {
@@ -32,11 +32,6 @@ const App = () => {
   
   console.log(countryArrayLength)
 
-  /*Countries matching filter criteria:
-  {countriesToShow.map((country, i) =>
-  <Country key={country.name} country={country}/>
-  )} */
-
   return (
     <>
     <div>
@@ -50,7 +45,7 @@ const App = () => {
     }
       {console.log(countriesToShow)}
       {countriesToShow.map((country, i) => 
-      <Country filtervalue={filterValue} country={countryData} key={country.name} />
+      <MultiCountry filtervalue={filterValue} country={countryData} key={country.name} />
       )}
     <SingleCountry filterValue={filterValue} country={countryData} />
     </>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Country = ({ filterValue, country }) => {
+const MultiCountry = ({ filterValue, country }) => {
     //console.log(filterValue)
     //console.log(country.filter(country => country.name.toLowerCase().includes(`${filterValue}`)))
     if (country.filter(country => country.name.toLowerCase().includes(`${filterValue}`)) < 10) {
@@ -17,4 +17,4 @@ const Country = ({ filterValue, country }) => {
     }
 }
 
-export default Country
+export default MultiCountry
