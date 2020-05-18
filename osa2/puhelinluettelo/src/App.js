@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Filter from './components/Filter'
+import Person from './components/Person'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -31,7 +34,7 @@ const App = () => {
     }
   }
 
-  const personsToShow = persons.filter(p => p.name.toLowerCase().includes(`${filterValue}`))
+  const personsToShow = persons.filter(person => person.name.toLowerCase().includes(`${filterValue}`))
 
   const handleNewName = (event) => {
     console.log(event.target.value)
@@ -53,38 +56,18 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter shown with <input 
-        value={filterValue}
-        onChange={handleFilterValue}
-        />
-      </div>
+      <Filter filterValue={filterValue}
+      handleFilterValue={handleFilterValue} />
       <div>
         <h2>Add new</h2>
       </div>
-      <form onSubmit={addName}>
-        <div>
-          name: <input
-       value={newName} 
-       onChange={handleNewName}
-       />
-        </div>
-        <div>
-          name: <input
-       value={newNumber} 
-       onChange={handleNewNumber}
-       />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm addName={addName}
+      newName={newName} handleNewName={handleNewName}
+      newNumber={newNumber} handleNewNumber={handleNewNumber}/>
       <h2>Numbers</h2>
       <ul>
-        {personsToShow.map(person =>
-        <li key={person.name}>
-          {person.name} {person.number}
-          </li>
+        {personsToShow.map((person, i) =>
+        <Person key={person.id} person={person}/>
         )}
       </ul>
     </div>
