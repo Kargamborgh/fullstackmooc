@@ -8,13 +8,19 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
+
     const nameObject = {
       name: newName,
-      id: persons.length+1,
     }
 
+    if (persons.map(n => n.name).includes(newName)) {
+      alert(`${newName} on jo lisätty`)
+      setNewName('')
+    } 
+    else {
     setPersons(persons.concat(nameObject))
     setNewName('')
+    }
   }
 
   const handleNewName = (event) => {
@@ -39,7 +45,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map(person =>
-        <li key={person.id}>
+        <li key={person.name}>
           {person.name}
           </li>
         )}
