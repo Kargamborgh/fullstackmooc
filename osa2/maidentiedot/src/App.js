@@ -30,7 +30,13 @@ const App = () => {
   
   const countryArrayLength = countryData.filter(country => country.name.toLowerCase().includes(`${filterValue}`)).length
   
-  console.log(countryArrayLength)
+  //console.log(countryArrayLength)
+
+  /*<div key={country.name}>
+  {country.name}
+</div>*/
+
+  //
 
   return (
     <>
@@ -38,15 +44,19 @@ const App = () => {
       <Filter filterValue={filterValue}
       handleFilterValue={handleFilterValue} />
     </div>
+
     {countryArrayLength > 10 &&
     <div>
      Too many countries, narrow search pls  
     </div>
     }
-      {console.log(countriesToShow)}
+
+    {console.log(countriesToShow)}
+
       {countriesToShow.map((country, i) => 
-      <MultiCountry filtervalue={filterValue} country={countryData} key={country.name} />
+        <MultiCountry  key={country.name} filtervalue={filterValue} country={countryData} />
       )}
+      
     <SingleCountry filterValue={filterValue} country={countryData} />
     </>
   )
