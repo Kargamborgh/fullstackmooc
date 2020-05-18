@@ -1,11 +1,20 @@
 import React from 'react'
 
-const Country = ({ country }) => {
-    return (
-        <div>
-        {country.name}
-        </div>
-    )
+const Country = ({ filterValue, country }) => {
+    //console.log(filterValue)
+    //console.log(country.filter(country => country.name.toLowerCase().includes(`${filterValue}`)))
+    if (country.filter(country => country.name.toLowerCase().includes(`${filterValue}`)) < 10) {
+        return (
+                <div>
+                    {country.name}
+                </div>
+        )
+    }
+    else {
+        return (
+            null
+        )
+    }
 }
 
 export default Country

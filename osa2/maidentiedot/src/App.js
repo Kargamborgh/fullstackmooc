@@ -48,7 +48,11 @@ const App = () => {
      Too many countries, narrow search pls  
     </div>
     }
-    <SingleCountry filterValue={filterValue} countryData={countryData} />
+      {console.log(countriesToShow)}
+      {countriesToShow.map((country, i) => 
+      <Country filtervalue={filterValue} country={countryData} key={country.name} />
+      )}
+    <SingleCountry filterValue={filterValue} country={countryData} />
     </>
   )
 }
