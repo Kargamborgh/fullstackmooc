@@ -42,6 +42,17 @@ const App = () => {
     }
   }
 
+  const removePerson = id => {
+    const url = `http://localhost:3001/persons/${id}`
+    const person = persons.find(p => p.id === id)
+
+    personService
+    .remove(id)
+    .then(returnedPerson => {
+      setPersons(persons.filter(n => n.id !== id))
+    })
+  }
+
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(`${filterValue}`))
 
   const handleNewName = (event) => {
@@ -73,7 +84,8 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {personsToShow.map((person, i) =>
-        <Person key={person.id} person={person}/>
+        <Person key={i} person={person}
+        removeName={() => removePerson(person.id)}/>
         )}
       </ul>
     </div>
