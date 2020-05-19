@@ -4,12 +4,14 @@ import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 import axios from 'axios'
 import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterValue, setFilterValue ] = useState('')
+  const [ message, setMessage ] = useState(null)
 
   useEffect(() => {
     personService
@@ -32,6 +34,12 @@ const App = () => {
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
+        setMessage(
+          `${newName} added `
+        )
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
         setNewName('')
       })
     } 
@@ -46,26 +54,16 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
       })
+      setMessage(
+        `${persons[id-1].name} updated`
+      )
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
       setNewName('')
       setNewNumber('')
     }
     }
-  }
-
-  const updatePerson = (id, personObject) => {
-    const updateUrl = `http://localhost:3001/persons/${id}`
-    console.log(updateUrl)
-    const person = persons.find(p => p.id === id)
-    const changedPerson = { ...person, number: newNumber }
-
-      personService
-      .update(id, changedPerson)
-      .then(returnedPerson => {
-        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
-      })
-      console.log(personObject + 'benis')
-      setNewName('')
-      setNewNumber('')
   }
 
   const removePerson = id => {
@@ -78,6 +76,12 @@ const App = () => {
     .then(returnedPerson => {
       setPersons(persons.filter(n => n.id !== id))
     })
+    setMessage(
+      `${person.name} removed`
+    )
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
   }
   }
 
@@ -101,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter filterValue={filterValue}
       handleFilterValue={handleFilterValue} />
       <div>
