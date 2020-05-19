@@ -44,7 +44,7 @@ const App = () => {
       })
     } 
     else {
-      if (window.confirm(`${newName} on jo lisätty, haluatko päivittää numeron?`)) {
+      if (window.confirm(`${newName} exists, update number?`)) {
 
       const id = persons.map(n => n.name).indexOf(newName)+1
       console.log(id)
