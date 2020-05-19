@@ -46,11 +46,13 @@ const App = () => {
     const url = `http://localhost:3001/persons/${id}`
     const person = persons.find(p => p.id === id)
 
+    if (window.confirm(`Delete ${person.name}?`)) {
     personService
     .remove(id)
     .then(returnedPerson => {
       setPersons(persons.filter(n => n.id !== id))
     })
+  }
   }
 
   const personsToShow = persons.filter(person => person.name.toLowerCase().includes(`${filterValue}`))
