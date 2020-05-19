@@ -21,9 +21,15 @@ const remove = (id) => {
     return request.then(response => response.data)
   }
 
+const getByName = (param) => {
+    const request = axios.get(baseUrl, param)
+    return request.then(response => response.data.name.includes())
+}
+
 export default { 
   getAll, 
   create, 
   update,
-  remove
+  remove,
+  getByName
 }

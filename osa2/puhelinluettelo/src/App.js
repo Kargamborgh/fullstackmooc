@@ -27,19 +27,45 @@ const App = () => {
       number: newNumber
     }
 
-    if (persons.map(n => n.name).includes(newName)) {
-      alert(`${newName} on jo lisätty`)
-      setNewName('')
-      setNewNumber('')
-    } 
-    else {
+    if (!persons.map(n => n.name).includes(newName)) {
       personService
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
       })
+    } 
+    else {
+      if (window.confirm(`${newName} on jo lisätty, haluatko päivittää numeron?`)) {
+
+      const id = persons.map(n => n.name).indexOf(newName)+1
+      console.log(id)
+      
+      personService
+      .update(id, personObject)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+      })
+      setNewName('')
+      setNewNumber('')
     }
+    }
+  }
+
+  const updatePerson = (id, personObject) => {
+    const updateUrl = `http://localhost:3001/persons/${id}`
+    console.log(updateUrl)
+    const person = persons.find(p => p.id === id)
+    const changedPerson = { ...person, number: newNumber }
+
+      personService
+      .update(id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+      })
+      console.log(personObject + 'benis')
+      setNewName('')
+      setNewNumber('')
   }
 
   const removePerson = id => {
