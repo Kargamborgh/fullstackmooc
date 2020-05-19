@@ -3,23 +3,21 @@ import Filter from './components/Filter'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterValue, setFilterValue ] = useState('')
 
-  const effHook = () => {
-    console.log('effect lol')
-    axios.get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
-    })
-  }
-
-  useEffect(effHook, [])
+  useEffect(() => {
+    personService
+  .getAll()
+  .then(initialPersons => {
+    setPersons(initialPersons)
+  })
+  }, [])
 
   const addName = (event) => {
     event.preventDefault()
@@ -35,9 +33,12 @@ const App = () => {
       setNewNumber('')
     } 
     else {
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+      personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+      })
     }
   }
 
