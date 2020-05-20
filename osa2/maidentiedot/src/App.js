@@ -8,6 +8,7 @@ import SingleCountry from './components/SingleCountry'
 const App = () => {
   const [ countryData, setCountryData ] = useState([])
   const [ filterValue, setFilterValue ] = useState('')
+
   const api_key = process.env.REACT_APP_API_KEY
 
   const countryDataHook = () => {

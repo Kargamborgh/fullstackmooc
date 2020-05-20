@@ -1,12 +1,15 @@
 import React from 'react'
 
-const Languages = ({ languages }) => {
-    //console.log(languages)
+const Languages = ({ languages, length }) => {
+
+    console.log(languages)
+    
     return (
         <li>
             {languages}
         </li>
     )
+
 }
 
 export default Languages
