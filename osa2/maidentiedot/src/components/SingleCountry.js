@@ -5,12 +5,12 @@ import Weather from './Weather'
 const SingleCountry = ({ country, filterValue, api_key }) => {
     const ThisCountry = country.filter(country => country.name.toLowerCase().includes(`${filterValue}`))
     const theseLanguages = ThisCountry.map(c => c.languages)
-    const [ weatherData, setWeatherData ] = useState([])
 
     //console.log(ThisCountry)
     //console.log(theseLanguages)
 
         if (ThisCountry.length === 1) {
+
             return (
                 <>
                 <h1>

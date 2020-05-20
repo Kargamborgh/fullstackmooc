@@ -9,8 +9,6 @@ const App = () => {
   const [ countryData, setCountryData ] = useState([])
   const [ filterValue, setFilterValue ] = useState('')
 
-  const api_key = process.env.REACT_APP_API_KEY
-
   const countryDataHook = () => {
     console.log('effect logging lol')
     axios
@@ -54,7 +52,7 @@ const App = () => {
       )}
     </ul>
     }
-    <SingleCountry filterValue={filterValue} country={countryData} api_key={api_key} />
+    <SingleCountry filterValue={filterValue} country={countryData} />
     </>
   )
 }
