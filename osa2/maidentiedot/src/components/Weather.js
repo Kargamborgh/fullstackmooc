@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const Weather = ({ city }) => {
 
-    const [weatherData, setWeatherData] = useState([
+    const [weatherData, setWeatherData] = useState(
         {
             request: {
             type: "City",
@@ -45,24 +45,35 @@ const Weather = ({ city }) => {
             is_day: "yes"
             }
             }
-    ])
+    )
     const api_key = process.env.REACT_APP_API_KEY
 
-    /*const weatherDataHook = () => {
+    const weatherDataHook = () => {
         axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${city}`)
         .then(response => {
             console.log(response.data)
-            setWeatherData(response.data.current)
+            setWeatherData(response.data)
         })
     }
 
-    useEffect(weatherDataHook, []) */
+    useEffect(weatherDataHook, [])
 
     console.log(weatherData)
 
         return (
             <div>
-                {weatherData.filter(w => w.current).map(y => y.temperature)}
+                <h1>
+                    {`Weather in ${city}`}
+                </h1>
+                <div>
+                Temperature: {weatherData.current.temperature} Celsius
+                </div>
+                <div>
+                    <img src={weatherData.current.weather_icons} alt="image of weather" />
+                </div>
+                <div>
+                    Wind: {weatherData.current.wind_speed} km/h {weatherData.current.wind_dir}
+                </div>
             </div>
         )
 }

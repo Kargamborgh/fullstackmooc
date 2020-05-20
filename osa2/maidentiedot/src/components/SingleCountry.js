@@ -37,7 +37,6 @@ const SingleCountry = ({ country, filterValue, api_key }) => {
                     <img src={ThisCountry.map(country => country.flag)} alt={`flag of ${ThisCountry.map(country => country.name)}`} />
                 </div>
                 <div>
-                    {`Weather in ${ThisCountry.map(country => country.capital)}:`}
                     <Weather city={ThisCountry.map(country => country.capital)} />
                 </div>
                 </>
