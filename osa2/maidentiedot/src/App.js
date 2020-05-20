@@ -8,6 +8,7 @@ import SingleCountry from './components/SingleCountry'
 const App = () => {
   const [ countryData, setCountryData ] = useState([])
   const [ filterValue, setFilterValue ] = useState('')
+  const api_key = process.env.REACT_APP_API_KEY
 
   const countryDataHook = () => {
     console.log('effect logging lol')
@@ -32,6 +33,7 @@ const App = () => {
   
   const countryArrayLength = countryData.filter(country => country.name.toLowerCase().includes(`${filterValue}`)).length
 
+  //console.log(countriesToShow)
   return (
     <>
     <div>
@@ -51,7 +53,7 @@ const App = () => {
       )}
     </ul>
     }
-    <SingleCountry filterValue={filterValue} country={countryData} />
+    <SingleCountry filterValue={filterValue} country={countryData} api_key={api_key} />
     </>
   )
 }

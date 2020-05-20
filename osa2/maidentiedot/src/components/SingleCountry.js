@@ -1,11 +1,12 @@
 import React from 'react'
+import Languages from './Languages'
 
-const SingleCountry = ({ country, filterValue }) => {
+const SingleCountry = ({ country, filterValue, api_key }) => {
     const ThisCountry = country.filter(country => country.name.toLowerCase().includes(`${filterValue}`))
+    const theseLanguages = ThisCountry.map(c => c.languages)
 
-    /*const languageMap = ({ country }) => {
-        country.languages.map((lang, i) => lang.name)
-        } */
+    console.log(ThisCountry)
+    console.log(theseLanguages)
         if (ThisCountry.length === 1) {
             return (
                 <>
@@ -24,11 +25,16 @@ const SingleCountry = ({ country, filterValue }) => {
                     Languages:   
                 </h2>
                     <ul>
-                        <li>{ThisCountry.map(country => country.languages[0].name)}</li>
+                        {ThisCountry.map((c, i) =>
+                        <Languages key={i} languages={c.languages.map(d => d.name)} />
+                        )}
                     </ul>
                 <div>
                     Flag:
                     <img src={ThisCountry.map(country => country.flag)} alt={`flag of ${ThisCountry.map(country => country.name)}`} />
+                </div>
+                <div>
+                    {`Weather in ${ThisCountry.map(country => country.capital)}:`}
                 </div>
                 </>
             )

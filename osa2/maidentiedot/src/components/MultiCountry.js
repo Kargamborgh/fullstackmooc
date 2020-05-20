@@ -4,8 +4,6 @@ const MultiCountry = ({ length, filterValue, country }) => {
 
     console.log(country)
 
-    //    console.log(length)
-
             return (
                 <li>
                     {country.name}
