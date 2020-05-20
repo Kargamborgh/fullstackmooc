@@ -1,12 +1,14 @@
 import React from 'react'
 
-const MultiCountry = ({ length, country }) => {
+const MultiCountry = ({ length, filterValue, country }) => {
 
-    console.log(length)
-    
+    console.log(country)
+
+    //    console.log(length)
+
             return (
                 <li>
-                    {country}
+                    {country.name}
                 </li>
                 )
             }

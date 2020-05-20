@@ -26,6 +26,8 @@ const App = () => {
     setFilterValue(event.target.value)
   }
 
+
+
   const countriesToShow = countryData.filter(country => country.name.toLowerCase().includes(`${filterValue}`))
   
   const countryArrayLength = countryData.filter(country => country.name.toLowerCase().includes(`${filterValue}`)).length
@@ -42,10 +44,10 @@ const App = () => {
      Too many countries, narrow search pls  
     </div>
     }
-    {countryArrayLength < 10 &&
+    {countryArrayLength < 10 && countryArrayLength > 1 &&
     <ul>
       {countriesToShow.map((c, i) =>
-      <MultiCountry key={i} length={i} country={c.name} />
+      <MultiCountry key={i} length={i} filterValue={filterValue} country={c} />
       )}
     </ul>
     }

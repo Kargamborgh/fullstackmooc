@@ -28,7 +28,7 @@ const SingleCountry = ({ country, filterValue }) => {
                     </ul>
                 <div>
                     Flag:
-                    <img src={ThisCountry.map(country => country.flag)} />
+                    <img src={ThisCountry.map(country => country.flag)} alt={`flag of ${ThisCountry.map(country => country.name)}`} />
                 </div>
                 </>
             )
