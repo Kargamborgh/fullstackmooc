@@ -12,4 +12,4 @@ const Error = ({ error }) => {
     )
   }
 
-  export default Notification
+  export default Error

@@ -76,6 +76,10 @@ const App = () => {
     .remove(id)
     .then(returnedPerson => {
       setPersons(persons.filter(n => n.id !== id))
+      setMessage(`${person.name} removed`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     })
     .catch(error => {
       setError(`${person.name} could not be removed`)
@@ -83,12 +87,6 @@ const App = () => {
         setError(null)
       }, 5000)
     })
-    setMessage(
-      `${person.name} removed`
-    )
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
   }
   }
 
