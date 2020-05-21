@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
-import axios from 'axios'
 import personService from './services/persons'
 import Notification from './components/Notification'
+import Error from './components/Error'
 
 const App = () => {
   const [ persons, setPersons] = useState([])
@@ -12,6 +12,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ filterValue, setFilterValue ] = useState('')
   const [ message, setMessage ] = useState(null)
+  const [ error, setError ] = useState(null)
 
   useEffect(() => {
     personService
@@ -75,6 +76,12 @@ const App = () => {
     .remove(id)
     .then(returnedPerson => {
       setPersons(persons.filter(n => n.id !== id))
+    })
+    .catch(error => {
+      setError(`${person.name} could not be removed`)
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
     })
     setMessage(
       `${person.name} removed`
