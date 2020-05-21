@@ -112,6 +112,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Error error={error} />
       <Notification message={message} />
       <Filter filterValue={filterValue}
       handleFilterValue={handleFilterValue} />
