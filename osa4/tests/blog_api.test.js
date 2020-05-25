@@ -56,6 +56,23 @@ test('a valid blog can be added ', async () => {
   )
 })
 
+test('if blog is created without likes, set likes to zero', async () => {
+  const newBlog = {
+    title: 'Milla Magian Testiblogi',
+    author: 'Milla Magia',
+    url: 'millantaikakauppa.com'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd[blogsAtEnd.length-1].likes).toEqual(0)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
