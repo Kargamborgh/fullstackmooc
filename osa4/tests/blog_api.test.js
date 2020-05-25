@@ -33,6 +33,29 @@ test('blogs must have field id, not _id', async () => {
   expect(ids).toBeDefined()
 })
 
+test('a valid blog can be added ', async () => {
+  const newBlog = {
+    title: 'Mikin Testiblogi',
+    author: 'Mikki Hiiri',
+    url: 'someUrl.com',
+    likes: 222
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const contents = blogsAtEnd.map(b => b.title)
+  expect(contents).toContain(
+    'Mikin Testiblogi'
+  )
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
