@@ -51,9 +51,28 @@ const mostBlogs = (blogs) => {
   )
 }
 
+const mostLikes = (blogs) => {
+
+  const likesPerAuthor =
+  blogs.
+    reduce((acc, obj) => (acc[obj.author] = (acc[obj.author] || 0)+obj.likes, acc), {})
+
+  const maxLikesAuthor = _.maxBy(_.keys(likesPerAuthor), function(o) {
+    return likesPerAuthor[o]
+  })
+
+  return (
+    {
+      author: maxLikesAuthor,
+      likes: likesPerAuthor[`${maxLikesAuthor}`]
+    }
+  )
+
+}
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
