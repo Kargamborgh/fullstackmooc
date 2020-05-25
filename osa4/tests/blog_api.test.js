@@ -25,6 +25,14 @@ test('there are two blogs', async () => {
   expect(response.body).toHaveLength(2)
 })
 
+test('blogs must have field id, not _id', async () => {
+  const response = await api.get('/api/blogs')
+
+  const ids = response.body.map(r => r.id)
+
+  expect(ids).toBeDefined()
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
