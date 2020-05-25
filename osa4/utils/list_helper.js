@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+const _ = require('lodash')
+
 const dummy = () => {
   return 1
 }
@@ -28,8 +30,30 @@ const favoriteBlog = (blogs) => {
   )
 }
 
+const mostBlogs = (blogs) => {
+  // map to format of author:blogs
+
+  const blogsPerAuthor =
+  blogs
+    .reduce((acc, obj) => (acc[obj.author] = (acc[obj.author] || 0)+1, acc), {})
+
+  // return author with most blogs
+
+  const maxBlogsAuthor = _.maxBy(_.keys(blogsPerAuthor), function(o) {
+    return blogsPerAuthor[o]
+  })
+
+  return (
+    {
+      author: maxBlogsAuthor,
+      blogs: blogsPerAuthor[`${maxBlogsAuthor}`]
+    }
+  )
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
