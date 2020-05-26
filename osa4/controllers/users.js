@@ -11,6 +11,10 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
+  if (body.password.length < 3 || body.password === undefined) {
+    return response.status(400).json({ error: 'password too short or undefined' })
+  }
+
   const saltRounds = 9
   const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
