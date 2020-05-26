@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "",
+    "title": "Mikin Hauskat Seikkailut: osa 2",
     "author": "Mikki Hiiri",
     "url": "someUrl.com",
-    "likes": 666
+    "likes": 666,
+    "userId": "5ecd49a1b9a42f44a85dc9d3"
 }
