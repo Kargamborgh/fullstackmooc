@@ -73,6 +73,40 @@ test('if blog is created without likes, set likes to zero', async () => {
   expect(blogsAtEnd[blogsAtEnd.length-1].likes).toEqual(0)
 })
 
+test('a blog without title is not added', async () => {
+  const newBlog = {
+    author: 'Milla Magia',
+    url: 'millantaikakauppa.com',
+    likes: 666
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect (blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
+test('a blog without url is not added', async () => {
+  const newBlog = {
+    title: 'Millan Testiblogi',
+    author: 'Milla Magia',
+    likes: 666
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect (blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
