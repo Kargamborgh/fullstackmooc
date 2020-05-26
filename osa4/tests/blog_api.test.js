@@ -131,6 +131,33 @@ describe('when initial blogs are saved', () => {
       expect(titles).not.toContain(blogToDelete.title)
     })
   })
+
+  describe('updating a blog', () => {
+
+    test('succeeds with 204 if id is valid', async () => {
+
+      const newBlog = {
+        title: 'Hannun Testiblogi',
+        author: 'Hannu Hanhi',
+        url: 'hannulandia.com',
+        likes: 666
+      }
+
+      const blogsAtStart = await helper.blogsInDb()
+      const blogToUpdate = blogsAtStart[0]
+
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(newBlog)
+        .expect(204)
+
+      const blogsAtEnd = await helper.blogsInDb()
+
+      const titles = blogsAtEnd.map(b => b.title)
+
+      expect(titles).toContain(newBlog.title)
+    })
+  })
 })
 
 afterAll(() => {
