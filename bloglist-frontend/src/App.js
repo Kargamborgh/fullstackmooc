@@ -23,10 +23,6 @@ const App = () => {
         username, password,
       })
 
-      window.localStorage.setItem(
-        'loggedBlogAppUser', JSON.stringify(user)
-      )
-      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -39,6 +35,8 @@ const App = () => {
   }
 
   const loginForm = () => (
+    <div>
+      Log in
     <form onSubmit={handleLogin}>
       <div>
         username
@@ -59,24 +57,23 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
+    </div>      
   )
 
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in</h2>
-        {loginForm()}
-      </div>
-    )
-  }
+
 
   return (
       <div>
+        {user === null ?
+        loginForm() :
+        <div>
         <h2>blogs</h2>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
+      </div>
+        }
       </div>
   )
 }
