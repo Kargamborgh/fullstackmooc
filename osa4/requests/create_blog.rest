@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1oaWlyaSIsImlkIjoiNWVjZDQ5YTFiOWE0MmY0NGE4NWRjOWQzIiwiaWF0IjoxNTkwNTcyMDg0fQ.BYyj-5f2yAIvsLTG584SzPcKyXhQT66XHIJcPJUkrEw
 
 {
-    "title": "Mikki seikkailee Tokenin kanssa",
+    "title": "Mikki seikkailee Tokenin ja Middlewaren kanssa",
     "author": "Mikki Hiiri",
     "url": "someUrl.com",
     "likes": 666,
