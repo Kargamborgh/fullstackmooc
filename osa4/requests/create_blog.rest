@@ -1,8 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1oaWlyaSIsImlkIjoiNWVjZDQ5YTFiOWE0MmY0NGE4NWRjOWQzIiwiaWF0IjoxNTkwNTcyMDg0fQ.BYyj-5f2yAIvsLTG584SzPcKyXhQT66XHIJcPJUkrEw
 
 {
-    "title": "Mikin Hauskat Seikkailut: osa 2",
+    "title": "Mikki seikkailee Tokenin kanssa",
     "author": "Mikki Hiiri",
     "url": "someUrl.com",
     "likes": 666,
