@@ -102,6 +102,15 @@ const App = () => {
     blogRef.current.toggleView()
   }
 
+  const addLike = async id => {
+    const blog = blogs.find(b => b.id === id)
+    const likedBlog = { ...blog, likes : blog.likes + 1, user: user.id}
+
+    const updatedBlog = await blogService.update(id, likedBlog)
+    console.log(updatedBlog)
+    setBlogs(blogs.map(b => b.id !== id ? b : updatedBlog))
+  }
+
 
   return (
       <div>
@@ -117,7 +126,8 @@ const App = () => {
         {blogs.map((blog, i) =>
           <Blog key={i}
           blog={blog} 
-          toggleView={() => toggleViewOf(blog.id)} 
+          toggleView={() => toggleViewOf(blog.id)}
+          addLike={() => addLike(blog.id)} 
           ref={blogRef}/>
         )}
       </div>

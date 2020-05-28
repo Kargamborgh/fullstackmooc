@@ -1,7 +1,7 @@
 import React, { useState, useImperativeHandle } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = React.forwardRef(({ blog }, ref) => {
+const Blog = React.forwardRef(({ blog, addLike }, ref) => {
 
   const [view, setView] = useState(false)
   const viewLabel = view ? 'view less' : 'view more'
@@ -23,16 +23,7 @@ const Blog = React.forwardRef(({ blog }, ref) => {
     borderWidth: 1,
     marginBottom: 5
   }
-
-  const addLike = async () => {
-    const likedBlog = {...blog, likes: blog.likes+1}
-
-    const updatedBlog = await blogService.update(blog.id, likedBlog)
-    console.log(updatedBlog)
-  }
-
-  //<button onClick={() => console.log(blog.id)}>like</button>
-
+  
   if (view) {
   return (
   <div style={blogStyle}>
