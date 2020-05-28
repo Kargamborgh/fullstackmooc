@@ -14,6 +14,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const blogFormRef = React.createRef()
+  const blogRef = React.createRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -97,6 +98,10 @@ const App = () => {
     </Togglable>
   )
 
+  const toggleViewOf = id => {
+    blogRef.current.toggleView()
+  }
+
 
   return (
       <div>
@@ -109,8 +114,9 @@ const App = () => {
           <button onClick={() => window.localStorage.clear()}>logout</button>
           {blogForm()}
         <h2>blogs</h2>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+        {blogs.map((blog, i) =>
+          <Blog key={i}
+          blog={blog} toggleView={() => toggleViewOf(blog.id)} ref={blogRef}/>
         )}
       </div>
         }
