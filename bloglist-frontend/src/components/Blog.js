@@ -1,5 +1,4 @@
 import React, { useState, useImperativeHandle } from 'react'
-import blogService from '../services/blogs'
 
 const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
 
