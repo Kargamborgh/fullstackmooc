@@ -38,6 +38,7 @@ describe('Blog />', () => {
     )
 
     const button = component.container.querySelector('viewMore')
+    fireEvent.click(button)
 
     component.debug()
 
