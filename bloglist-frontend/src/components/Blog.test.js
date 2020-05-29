@@ -11,11 +11,12 @@ describe('Blog />', () => {
     likes: 666
   }
 
-  const component = render(
-    <Blog blog={blog} />
-  )
-
   test('renders title and author by default', () => {
+
+    const component = render(
+      <Blog blog={blog} />
+    )
+
     expect(component.container).toHaveTextContent(
       'Test Blog'
     )
@@ -28,5 +29,30 @@ describe('Blog />', () => {
     expect(component.container).not.toHaveValue(
       666
     )
+  })
+
+  test('renders title, author, url and likes when view button is pressed', () => {
+
+    const component = render(
+      <Blog blog={blog} />
+    )
+
+    const button = component.container.querySelector('viewMore')
+
+    component.debug()
+
+    expect(component.container).toHaveTextContent(
+      'Test Blog'
+    )
+    expect(component.container).toHaveTextContent(
+      'Test Blog'
+    )
+    expect(component.container).toHaveTextContent(
+      'Test Url'
+    )
+    expect(component.container).toHaveValue(
+      666
+    )
+
   })
 })

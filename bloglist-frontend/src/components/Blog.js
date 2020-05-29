@@ -23,11 +23,18 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
     marginBottom: 5
   }
 
-  if (view) {
-    return (
+  return (
+    <>
+      {!view &&
+      <div style={blogStyle} className='defaultBlogView'>
+        {blog.title} {blog.author}
+        <button onClick={toggleView} className='viewMore'>{viewLabel}</button>
+      </div>
+      }
+      {view &&
       <div style={blogStyle} className='expandedBlogView'>
      title: {blog.title}
-        <button onClick={toggleView} className='viewMore'>{viewLabel}</button>
+        <button onClick={toggleView} className='viewLess'>{viewLabel}</button>
         <div>
       url: {blog.url}
         </div>
@@ -46,15 +53,10 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
           }
         </div>
       </div>
-    )
-  } else {
-    return (
-      <div style={blogStyle} className='defaultBlogView'>
-        {blog.title} {blog.author}
-        <button onClick={toggleView} className='viewLess'>{viewLabel}</button>
-      </div>
-    )
-  }
+      }
+    </>
+  )
+
 })
 
 Blog.displayName = 'Blog'
