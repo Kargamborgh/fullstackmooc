@@ -1,7 +1,7 @@
 import React, { useState, useImperativeHandle } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = React.forwardRef(({ blog, addLike }, ref) => {
+const Blog = React.forwardRef(({ blog, addLike, deleteBlog }, ref) => {
 
   const [view, setView] = useState(false)
   const viewLabel = view ? 'view less' : 'view more'
@@ -38,6 +38,9 @@ const Blog = React.forwardRef(({ blog, addLike }, ref) => {
     </div>
     <div>
       author: {blog.author} 
+    </div>
+    <div>
+      <button onClick={deleteBlog}>remove</button>
     </div>
   </div>
   )

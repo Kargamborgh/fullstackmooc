@@ -115,6 +115,31 @@ const App = () => {
     blogs.sort((a, b) => (a.likes > b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
     .reverse()
 
+  const deleteBlog = async id => {
+    const blogToDelete = blogs.find(b => b.id === id)
+
+    if (window.confirm(`Remove blog ${blogToDelete.title}?`)) {
+      
+      try {
+        await blogService.remove(blogToDelete.id)
+    
+        setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
+
+        setErrorMessage(`${blogToDelete.title} removed successfully`)
+        setTimeout(() => {
+        setErrorMessage(null)
+        }, 5000)
+
+      } catch(exception) {
+
+          setErrorMessage('blog remove failed')
+          setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+
+      }
+    }
+  }
 
   return (
       <div>
@@ -131,7 +156,8 @@ const App = () => {
           <Blog key={i}
           blog={blog} 
           toggleView={() => toggleViewOf(blog.id)}
-          addLike={() => addLike(blog.id)} 
+          addLike={() => addLike(blog.id)}
+          deleteBlog={() => deleteBlog(blog.id)} 
           ref={blogRef}/>
         )}
       </div>
