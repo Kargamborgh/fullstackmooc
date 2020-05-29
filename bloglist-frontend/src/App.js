@@ -121,6 +121,7 @@ const App = () => {
     if (window.confirm(`Remove blog ${blogToDelete.title}?`)) {
       
       try {
+        blogFormRef.current.toggleVisibility()
         await blogService.remove(blogToDelete.id)
     
         setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
@@ -157,6 +158,7 @@ const App = () => {
           blog={blog} 
           toggleView={() => toggleViewOf(blog.id)}
           addLike={() => addLike(blog.id)}
+          user={user}
           deleteBlog={() => deleteBlog(blog.id)} 
           ref={blogRef}/>
         )}
