@@ -28,13 +28,13 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
       {!view &&
       <div style={blogStyle} className='defaultBlogView'>
         {blog.title} {blog.author}
-        <button onClick={toggleView} className='viewMore'>{viewLabel}</button>
+        <button className='viewMore' onClick={toggleView}>{viewLabel}</button>
       </div>
       }
       {view &&
       <div style={blogStyle} className='expandedBlogView'>
      title: {blog.title}
-        <button onClick={toggleView} className='viewLess'>{viewLabel}</button>
+        <button  className='viewLess' onClick={toggleView}>{viewLabel}</button>
         <div>
       url: {blog.url}
         </div>

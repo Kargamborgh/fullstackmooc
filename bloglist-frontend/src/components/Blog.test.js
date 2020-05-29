@@ -8,7 +8,16 @@ describe('Blog />', () => {
     title: 'Test Blog',
     author: 'Test User',
     url: 'Test Url',
-    likes: 666
+    likes: 666,
+    user: {
+      username: 'testuser',
+      name: 'Test User'
+    }
+  }
+
+  const user = {
+    username: 'testuser',
+    name: 'Test User'
   }
 
   test('renders title and author by default', () => {
@@ -34,10 +43,10 @@ describe('Blog />', () => {
   test('renders title, author, url and likes when view button is pressed', () => {
 
     const component = render(
-      <Blog blog={blog} />
+      <Blog blog={blog} user={user} />
     )
 
-    const button = component.container.querySelector('viewMore')
+    const button = component.container.querySelector('.viewMore')
     fireEvent.click(button)
 
     component.debug()
@@ -51,8 +60,8 @@ describe('Blog />', () => {
     expect(component.container).toHaveTextContent(
       'Test Url'
     )
-    expect(component.container).toHaveValue(
-      666
+    expect(component.container).toHaveTextContent(
+      'likes'
     )
 
   })
