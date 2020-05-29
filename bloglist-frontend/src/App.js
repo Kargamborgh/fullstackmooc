@@ -111,6 +111,10 @@ const App = () => {
     setBlogs(blogs.map(b => b.id !== id ? b : updatedBlog))
   }
 
+  const blogsSortedByLikes = 
+    blogs.sort((a, b) => (a.likes > b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
+    .reverse()
+
 
   return (
       <div>
@@ -123,7 +127,7 @@ const App = () => {
           <button onClick={() => window.localStorage.clear()}>logout</button>
           {blogForm()}
         <h2>blogs</h2>
-        {blogs.map((blog, i) =>
+        {blogsSortedByLikes.map((blog, i) =>
           <Blog key={i}
           blog={blog} 
           toggleView={() => toggleViewOf(blog.id)}
