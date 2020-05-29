@@ -22,31 +22,31 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
+
   if (view) {
-  return (
-  <div style={blogStyle}>
+    return (
+      <div style={blogStyle}>
      title: {blog.title}
-    <button onClick={toggleView}>{viewLabel}</button>
-    <div>
-      url: {blog.url} 
-    </div>
-    <div>
+        <button onClick={toggleView}>{viewLabel}</button>
+        <div>
+      url: {blog.url}
+        </div>
+        <div>
     likes: {blog.likes}
-    <button onClick={addLike}>like</button>
-    </div>
-    <div>
-      author: {blog.author} 
-    </div>
-    <div>
-      <button onClick={() => console.log(user.username)}>show user id</button>
-      <button onClick={() => console.log(blog.user.username)}>show blog</button>
-      {blog.user.username === user.username &&
+          <button onClick={addLike}>like</button>
+        </div>
+        <div>
+      author: {blog.author}
+        </div>
+        <div>
+          <button onClick={() => console.log(user.username)}>show user id</button>
+          <button onClick={() => console.log(blog.user.username)}>show blog</button>
+          {blog.user.username === user.username &&
       <button onClick={deleteBlog}>remove</button>
-      }
-    </div>
-  </div>
-  )
+          }
+        </div>
+      </div>
+    )
   } else {
     return (
       <div style={blogStyle}>
@@ -56,5 +56,7 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
     )
   }
 })
+
+Blog.displayName = 'Blog'
 
 export default Blog

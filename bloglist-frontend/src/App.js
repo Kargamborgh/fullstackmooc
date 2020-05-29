@@ -10,7 +10,7 @@ import BlogForm from './components/BlogForm'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const blogFormRef = React.createRef()
@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const App = () => {
         'loggedBlogAppUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
-      
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -70,7 +70,7 @@ const App = () => {
         handleSubmit={handleLogin}
       />
     </Togglable>
-    )
+  )
 
   const addBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility()
@@ -84,12 +84,12 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
 
-     } catch(exception) {
-       setErrorMessage('blog add failed')
-       setTimeout(() => {
+    } catch(exception) {
+      setErrorMessage('blog add failed')
+      setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
-     }
+    }
   }
 
   const blogForm = () => (
@@ -104,37 +104,37 @@ const App = () => {
 
   const addLike = async id => {
     const blog = blogs.find(b => b.id === id)
-    const likedBlog = { ...blog, likes : blog.likes + 1, user: user.id}
+    const likedBlog = { ...blog, likes : blog.likes + 1, user: user.id }
 
     const updatedBlog = await blogService.update(id, likedBlog)
     console.log(updatedBlog)
     setBlogs(blogs.map(b => b.id !== id ? b : updatedBlog))
   }
 
-  const blogsSortedByLikes = 
+  const blogsSortedByLikes =
     blogs.sort((a, b) => (a.likes > b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
-    .reverse()
+      .reverse()
 
   const deleteBlog = async id => {
     const blogToDelete = blogs.find(b => b.id === id)
 
     if (window.confirm(`Remove blog ${blogToDelete.title}?`)) {
-      
+
       try {
         blogFormRef.current.toggleVisibility()
         await blogService.remove(blogToDelete.id)
-    
+
         setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
 
         setErrorMessage(`${blogToDelete.title} removed successfully`)
         setTimeout(() => {
-        setErrorMessage(null)
+          setErrorMessage(null)
         }, 5000)
 
       } catch(exception) {
 
-          setErrorMessage('blog remove failed')
-          setTimeout(() => {
+        setErrorMessage('blog remove failed')
+        setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
 
@@ -143,28 +143,28 @@ const App = () => {
   }
 
   return (
-      <div>
-        <h1>Blog App</h1>
-        <Notification message={errorMessage} />
-        {user === null ?
+    <div>
+      <h1>Blog App</h1>
+      <Notification message={errorMessage} />
+      {user === null ?
         loginForm() :
         <div>
           <p>{user.name} logged in</p>
           <button onClick={() => window.localStorage.clear()}>logout</button>
           {blogForm()}
-        <h2>blogs</h2>
-        {blogsSortedByLikes.map((blog, i) =>
-          <Blog key={i}
-          blog={blog} 
-          toggleView={() => toggleViewOf(blog.id)}
-          addLike={() => addLike(blog.id)}
-          user={user}
-          deleteBlog={() => deleteBlog(blog.id)} 
-          ref={blogRef}/>
-        )}
-      </div>
-        }
-      </div>
+          <h2>blogs</h2>
+          {blogsSortedByLikes.map((blog, i) =>
+            <Blog key={i}
+              blog={blog}
+              toggleView={() => toggleViewOf(blog.id)}
+              addLike={() => addLike(blog.id)}
+              user={user}
+              deleteBlog={() => deleteBlog(blog.id)}
+              ref={blogRef}/>
+          )}
+        </div>
+      }
+    </div>
   )
 }
 
