@@ -40,7 +40,7 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
         </div>
         <div>
     likes: {blog.likes}
-          <button onClick={addLike}>like</button>
+          <button onClick={addLike} className='likeButton'>like</button>
         </div>
         <div>
       author: {blog.author}

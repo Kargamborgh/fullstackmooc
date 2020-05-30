@@ -49,8 +49,6 @@ describe('Blog />', () => {
     const button = component.container.querySelector('.viewMore')
     fireEvent.click(button)
 
-    component.debug()
-
     expect(component.container).toHaveTextContent(
       'Test Blog'
     )
@@ -64,5 +62,23 @@ describe('Blog />', () => {
       'likes'
     )
 
+  })
+
+  test('if like is pressed twice, addLike is called twice', () => {
+
+    const mockHandler = jest.fn()
+
+    const component = render(
+      <Blog blog={blog} user={user} addLike={mockHandler} />
+    )
+
+    const viewMorebutton = component.container.querySelector('.viewMore')
+    fireEvent.click(viewMorebutton)
+
+    const likeButton = component.container.querySelector('.likeButton')
+    fireEvent.click(likeButton)
+    fireEvent.click(likeButton)
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })
