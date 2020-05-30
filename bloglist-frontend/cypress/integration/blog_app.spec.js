@@ -1,3 +1,5 @@
+import { func } from "prop-types"
+
 /* eslint-disable no-undef */
 describe('Blog app', function() {
     beforeEach(function() {
@@ -38,6 +40,21 @@ describe('Blog app', function() {
             .should('contain', 'wrong credentials')
 
             cy.get('html').should('not.contain', 'Mikki Hiiri logged in')
+        })
+    })
+
+    describe.only('When logged in', function() {
+        beforeEach(function() {
+            cy.login({ username: 'mhiiri', password: 'salakala' })
+        })
+
+        it('A blog can be created', function () {
+            cy.contains('new blog').click()
+            cy.get('#title').type('cypress test blog')
+            cy.get('#author').type('cypress')
+            cy.get('#url').type('cypress_url.com')
+            cy.contains('create').click()
+            cy.contains('cypress test blog')
         })
     })
   })
