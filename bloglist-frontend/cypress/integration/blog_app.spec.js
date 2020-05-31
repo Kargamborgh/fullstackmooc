@@ -73,5 +73,19 @@ describe('Blog app', function() {
             cy.contains('like').click()
             cy.contains('likes: 1')
         })
+
+        describe('and a blog exists', function() {
+            beforeEach(function() {
+                cy.createBlog({ title: 'blog 1', author: 'cypress', url: 'cypress.com'})
+            })
+
+            it('that blog can be deleted', function() {
+                cy.contains('view more').click()
+                cy.contains('remove').click()
+
+                cy.visit('http://localhost:3000')
+                cy.get('html').should('not.contain', 'blog 1')
+            })
+        })
     })
   })
