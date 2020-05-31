@@ -1,6 +1,3 @@
-import { func } from "prop-types"
-
-/* eslint-disable no-undef */
 describe('Blog app', function() {
     beforeEach(function() {
       cy.request('POST', 'http://localhost:3001/api/testing/reset')
@@ -43,7 +40,7 @@ describe('Blog app', function() {
         })
     })
 
-    describe.only('When logged in', function() {
+    describe('When logged in', function() {
         beforeEach(function() {
             cy.login({ username: 'mhiiri', password: 'salakala' })
         })
@@ -76,15 +73,38 @@ describe('Blog app', function() {
 
         describe('and a blog exists', function() {
             beforeEach(function() {
-                cy.createBlog({ title: 'blog 1', author: 'cypress', url: 'cypress.com'})
+                cy.createBlog({ title: 'blog 1', author: 'cypress', url: 'cypress.com', likes: 0})
             })
 
             it('that blog can be deleted', function() {
                 cy.contains('view more').click()
                 cy.contains('remove').click()
 
-                cy.visit('http://localhost:3000')
-                cy.get('html').should('not.contain', 'blog 1')
+                const stub = cy.stub()
+                
+                cy.on('window:alert', stub)
+
+                cy.get('html').should('contain', 'blog 1 removed successfully')
+            })
+        })
+
+        describe('and several blogs exist', function() {
+            beforeEach(function() {
+                cy.createBlog({ title: 'blog 1', author: 'cypress', url: 'cypress.com', likes: 100})
+                cy.createBlog({ title: 'blog 2', author: 'cypress', url: 'cypress.com', likes: 200})
+                cy.createBlog({ title: 'blog 3', author: 'cypress', url: 'cypress.com', likes: 300})
+            })
+
+            it('blogs are sorted by likes', function() {
+                cy.contains('view more').click()
+                cy.contains('view more').click()
+                cy.contains('view more').click()
+
+                cy.get('[data-testid=likes]').then(($likes) => {
+                    expect($likes[0].innerText).to.eq('likes: 300like')
+                    expect($likes[1].innerText).to.eq('likes: 200like')
+                    expect($likes[2].innerText).to.eq('likes: 100like')
+                })
             })
         })
     })

@@ -38,7 +38,7 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
         <div>
       url: {blog.url}
         </div>
-        <div>
+        <div data-testid='likes'>
     likes: {blog.likes}
           <button onClick={addLike} className='likeButton'>like</button>
         </div>
