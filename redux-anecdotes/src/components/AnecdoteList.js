@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
 
-const Anecdote = ({ anecdote, voteOnClick }) => {
+const AnecdoteList = ({ anecdote, voteOnClick }) => {
     return (
     <div>
         <div key={anecdote.id}>
@@ -30,7 +30,7 @@ const Anecdotes = () => {
     return (
         <div>
             {sortedAnecdotes.map(anecdote =>
-                <Anecdote
+                <AnecdoteList
                 key={anecdote.id}
                 anecdote={anecdote}
                 voteOnClick={() =>
