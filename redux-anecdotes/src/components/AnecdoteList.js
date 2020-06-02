@@ -20,7 +20,7 @@ const AnecdoteList = ({ anecdote, voteOnClick }) => {
 
 const Anecdotes = () => {
     const dispatch = useDispatch()
-    const anecdotes = useSelector(state => state)
+    const anecdotes = useSelector(state => state.anecdotes)
 
     const sortedAnecdotes = 
     anecdotes
