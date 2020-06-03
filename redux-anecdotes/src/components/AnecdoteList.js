@@ -44,7 +44,7 @@ const Anecdotes = () => {
                 key={anecdote.id}
                 anecdote={anecdote}
                 voteOnClick={() =>
-                dispatch(voteAnecdote(anecdote.id)) &&
+                dispatch(voteAnecdote(anecdote.id, {...anecdote, votes: anecdote.votes+1})) &&
                 dispatch(renderNotification(`upvoted ${anecdote.content}`)) &&
                 setTimeout(() => {
                     dispatch(hideNotification(''))}, 5000)}
