@@ -47,7 +47,7 @@ const Anecdotes = () => {
                 dispatch(voteAnecdote(
                     anecdote.id,
                     {...anecdote, votes: anecdote.votes+1})) &&
-                dispatch(setNotification(`upvoted ${anecdote.content}`), 1000)}
+                dispatch(setNotification(`upvoted ${anecdote.content}`, 5))}
                 />
             )}
         </div>
