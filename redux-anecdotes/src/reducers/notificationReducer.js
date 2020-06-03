@@ -25,4 +25,19 @@ export const hideNotification = text => {
     }
 }
 
+export const setNotification = (anecdote, timer) => {
+    const text = ''
+    return async dispatch => {
+        dispatch({
+            type: 'RENDER',
+            data: {anecdote}
+        })
+        await setTimeout(
+            dispatch({
+                type: 'HIDE',
+                data:{text}
+            }), timer*100)
+    }
+}
+
 export default notificationReducer
