@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link,
@@ -21,13 +20,12 @@ const Menu = () => {
   )
 }
 
-const Anecdote = ({ anecdote }) => {
+const Anecdote = ({anecdote}) => {
   return (
   <div>
-    {console.log(anecdote)}
     <h3>{`${anecdote.content} by ${anecdote.author}`}</h3>
     <div>
-      {` has ${anecdote.votes} votes`}
+      {`has ${anecdote.votes} votes`}
     </div>
   </div>
   )
@@ -148,8 +146,10 @@ const App = () => {
 
   const match = useRouteMatch('/anecdotes/:id')
   const anecdote = match 
-    ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id))
+    ? anecdotes.find(anecdote => anecdote.id === match.params.id)
     : null
+  console.log(anecdotes)
+  console.log(anecdote)
 
   return (
     <div>
