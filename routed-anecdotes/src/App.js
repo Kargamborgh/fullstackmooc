@@ -74,6 +74,12 @@ const CreateNew = (props) => {
   const author = useField('text')
   const info = useField('text')
 
+  const resetAll = () => {
+    content.reset()
+    author.reset()
+    info.reset()
+  }
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -103,6 +109,7 @@ const CreateNew = (props) => {
         </div>
         <button>create</button>
       </form>
+      <button onClick={() => resetAll()}>reset fields</button>
     </div>
   )
 
