@@ -22,14 +22,16 @@ const useCountry = (name) => {
 
   const getCountryData = async () => {
     const response = await axios.get(countryUrl)
-    return response.data
+    return response
   }
 
   useEffect(() => {
     if (name !== '') {
 
-    //setCountry(getCountryData())
-    console.log(getCountryData())
+    getCountryData().then(response => {
+      const countryData = response.data[0];
+      setCountry(countryData)
+    })
 
     }
   },
