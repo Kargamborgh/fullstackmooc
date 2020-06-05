@@ -21,21 +21,23 @@ const useCountry = (name) => {
   const countryUrl = `https://restcountries.eu/rest/v2/name/${name}?fullText=true`
 
   const getCountryData = async () => {
-    const response = await axios.get(countryUrl)
-    return response
+    const response = 
+      await axios.get(countryUrl)
+      .then(response => {
+        setCountry(response.data[0])
+      })
   }
 
   useEffect(() => {
     if (name !== '') {
 
-    getCountryData().then(response => {
-      const countryData = response.data[0];
-      setCountry(countryData)
-    })
+    getCountryData()
 
     }
   },
   [name])
+
+  console.log(country)
 
   return country
 }
