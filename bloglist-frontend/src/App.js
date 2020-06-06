@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -6,10 +7,12 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import { renderNotification, hideNotification } from './reducers/notificationReducer'
+
 
 const App = () => {
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -47,15 +50,15 @@ const App = () => {
       setUsername('')
       setPassword('')
 
-      setErrorMessage(`${user.username} logged in`)
+      dispatch(renderNotification(`${user.username} logged in`))
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch(hideNotification(''))
       }, 5000)
 
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      dispatch(renderNotification('wrong credentials'))
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch(hideNotification(''))
       }, 5000)
     }
   }
@@ -79,15 +82,10 @@ const App = () => {
 
       setBlogs(blogs.concat(addedBlog))
 
-      setErrorMessage(`new blog ${blogObject.title} added successfully`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-
     } catch(exception) {
-      setErrorMessage('blog add failed')
+      dispatch(renderNotification('blog add failed'))
       setTimeout(() => {
-        setErrorMessage(null)
+        dispatch(hideNotification(''))
       }, 5000)
     }
   }
@@ -109,6 +107,11 @@ const App = () => {
     const updatedBlog = await blogService.update(id, likedBlog)
     console.log(updatedBlog)
     setBlogs(blogs.map(b => b.id !== id ? b : updatedBlog))
+
+    dispatch(renderNotification(`liked ${updatedBlog.title}`))
+    setTimeout(() => {
+      dispatch(hideNotification(''))
+    }, 5000)
   }
 
   const blogsSortedByLikes =
@@ -126,16 +129,16 @@ const App = () => {
 
         setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
 
-        setErrorMessage(`${blogToDelete.title} removed successfully`)
+        dispatch(renderNotification(`${blogToDelete.title} removed successfully`))
         setTimeout(() => {
-          setErrorMessage(null)
+          dispatch(hideNotification(''))
         }, 5000)
 
       } catch(exception) {
 
-        setErrorMessage('blog remove failed')
+        dispatch(renderNotification('blog remove failed'))
         setTimeout(() => {
-          setErrorMessage(null)
+          dispatch(hideNotification(''))
         }, 5000)
 
       }
@@ -145,7 +148,7 @@ const App = () => {
   return (
     <div>
       <h1>Blog App</h1>
-      <Notification message={errorMessage} />
+      <Notification />
       {user === null ?
         loginForm() :
         <div>
