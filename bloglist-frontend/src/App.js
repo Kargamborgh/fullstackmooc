@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import userService from './services/users'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { renderNotification, hideNotification } from './reducers/notificationReducer'
-
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from 'react-router-dom'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -16,8 +20,13 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [users, setUsers] = useState(null)
   const blogFormRef = React.createRef()
   const blogRef = React.createRef()
+
+  const padding = {
+    padding : 5
+  }
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -32,6 +41,11 @@ const App = () => {
       setUser(user)
       blogService.setToken(user.token)
     }
+  }, [])
+
+  useEffect (() => {
+    userService.getAll().then(users =>
+      setUsers( users ))
   }, [])
 
   const handleLogin = async (event) => {
@@ -145,6 +159,20 @@ const App = () => {
     }
   }
 
+  const Users = ({ users }) => (
+    <div>
+      <h3>Users</h3>
+      {console.log(users)}
+      <ul>
+        {users.map(user =>
+          <li key={user.id}>
+            {user.name} --- blogs created: {user.blogs.length}
+          </li>
+        )}
+      </ul>
+    </div>
+  )
+
   return (
     <div>
       <h1>Blog App</h1>
@@ -167,6 +195,17 @@ const App = () => {
           )}
         </div>
       }
+      <Router>
+        <div>
+          <Link style={padding} to='/users'>users</Link>
+        </div>
+
+        <Switch>
+          <Route path='/users'>
+            <Users users={users} />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }
