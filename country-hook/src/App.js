@@ -21,11 +21,17 @@ const useCountry = (name) => {
   useEffect(
     () => {
     if (name !== '') {
-
-      axios.get(`https://restcountries.eu/rest/v2/name/${name}?fullText=true`).then(response => {
-        setCountry(response.data[0])
-      })
-
+      const getCountryData = async () => {
+        try {
+          const response = await axios.get(`https://restcountries.eu/rest/v2/name/${name}?fullText=true`)
+          console.log(response.data[0])
+          setCountry(response.data[0])
+        } catch (e) {
+          console.error(e)
+          setCountry('not found')
+        }
+      }
+      getCountryData()
     }
   },
   [name])
@@ -38,13 +44,13 @@ const Country = ({ country, name }) => {
     return null
   }
 
-  if (country.name.toLowerCase() !== name) {
+  if (!country.name) {
     return (
       <div>
         not found...
       </div>
     )
-  } 
+  }
 
   return (
     <div>
