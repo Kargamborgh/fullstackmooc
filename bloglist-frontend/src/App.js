@@ -211,6 +211,31 @@ const App = () => {
     )
   }
 
+  const Blogs = ({ blogs }) => {
+    if (!blogs) {
+      return null
+    }
+    return (
+      <div>
+        <h2>blogs</h2>
+        {blogs.map((blog, i) =>
+          <div style={blogStyle} key={blog.id}>
+            <Link key={blog.id} to={`/blogs/${blog.id}`}>
+              {blog.title} {blog.author}
+            </Link>
+          </div>
+          /*<Blog key={i}
+              blog={blog}
+              toggleView={() => toggleViewOf(blog.id)}
+              addLike={() => addLike(blog.id)}
+              user={user}
+              deleteBlog={() => deleteBlog(blog.id)}
+              ref={blogRef}/>*/
+        )}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Blog App</h1>
@@ -221,25 +246,11 @@ const App = () => {
           <p>{user.name} logged in</p>
           <button onClick={() => window.localStorage.clear()}>logout</button>
           {blogForm()}
-          <h2>blogs</h2>
-          {blogsSortedByLikes.map((blog, i) =>
-            <div style={blogStyle} key={blog.id}>
-              <Link key={blog.id} to={`/blogs/${blog.id}`}>
-                {blog.title} {blog.author}
-              </Link>
-            </div>
-            /*<Blog key={i}
-              blog={blog}
-              toggleView={() => toggleViewOf(blog.id)}
-              addLike={() => addLike(blog.id)}
-              user={user}
-              deleteBlog={() => deleteBlog(blog.id)}
-              ref={blogRef}/>*/
-          )}
         </div>
       }
       <div>
         <Link style={padding} to='/users'>users</Link>
+        <Link style={padding} to='/blogs'>blogs</Link>
       </div>
 
       <Switch>
@@ -252,6 +263,9 @@ const App = () => {
         <Route path='/blogs/:id'>
           {console.log('app.js', blogToShow)}
           <Blog blog={blogToShow} addLike={() => addLike(blogToShow.id)}/>
+        </Route>
+        <Route path='/blogs'>
+          <Blogs blogs={blogsSortedByLikes}/>
         </Route>
       </Switch>
     </div>
