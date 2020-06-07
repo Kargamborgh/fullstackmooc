@@ -27,6 +27,15 @@ const App = () => {
     padding : 5
   }
 
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
+
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -128,8 +137,7 @@ const App = () => {
   }
 
   const blogsSortedByLikes =
-    blogs.sort((a, b) => (a.likes > b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
-      .reverse()
+    blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes < a.likes) ? -1 : 0))
 
   const deleteBlog = async id => {
     const blogToDelete = blogs.find(b => b.id === id)
@@ -173,9 +181,14 @@ const App = () => {
     </div>
   )
 
-  const match = useRouteMatch('/users/:id')
-  const userToShow = match
-    ? users.find(user => user.id === match.params.id)
+  const matchUser = useRouteMatch('/users/:id')
+  const userToShow = matchUser
+    ? users.find(user => user.id === matchUser.params.id)
+    : null
+
+  const matchBlog = useRouteMatch('/blogs/:id')
+  const blogToShow = matchBlog
+    ? blogs.find(blog => blog.id === matchBlog.params.id)
     : null
 
   const User = ({ user }) => {
@@ -210,13 +223,18 @@ const App = () => {
           {blogForm()}
           <h2>blogs</h2>
           {blogsSortedByLikes.map((blog, i) =>
-            <Blog key={i}
+            <div style={blogStyle} key={blog.id}>
+              <Link key={blog.id} to={`/blogs/${blog.id}`}>
+                {blog.title} {blog.author}
+              </Link>
+            </div>
+            /*<Blog key={i}
               blog={blog}
               toggleView={() => toggleViewOf(blog.id)}
               addLike={() => addLike(blog.id)}
               user={user}
               deleteBlog={() => deleteBlog(blog.id)}
-              ref={blogRef}/>
+              ref={blogRef}/>*/
           )}
         </div>
       }
@@ -230,6 +248,10 @@ const App = () => {
         </Route>
         <Route path='/users'>
           <Users users={users} />
+        </Route>
+        <Route path='/blogs/:id'>
+          {console.log('app.js', blogToShow)}
+          <Blog blog={blogToShow} addLike={() => addLike(blogToShow.id)}/>
         </Route>
       </Switch>
     </div>
