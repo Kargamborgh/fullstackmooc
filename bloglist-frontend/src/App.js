@@ -10,12 +10,13 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { renderNotification, hideNotification } from './reducers/notificationReducer'
 import {
-  Switch, Route, Link, useRouteMatch
+  Switch, Route, Link, useRouteMatch, useHistory
 } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
 const App = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -149,6 +150,8 @@ const App = () => {
         blogFormRef.current.toggleVisibility()
         await blogService.remove(blogToDelete.id)
 
+        history.push('/')
+
         setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
 
         dispatch(renderNotification(`${blogToDelete.title} removed successfully`))
@@ -174,8 +177,8 @@ const App = () => {
       <ul>
         {users.map(user =>
           <li key={user.id}>
-            <Link to={`/users/${user.id}`}>{user.name}</Link>
-            --- blogs created: {user.blogs.length}
+            <Link to={`/users/${user.id}`}>{user.name} </Link>
+             blogs created: {user.blogs.length}
           </li>
         )}
       </ul>
@@ -224,24 +227,24 @@ const App = () => {
             {blogs.map((blog, i) =>
               <tr key={blog.id}>
                 <td>
-            <Link key={blog.id} to={`/blogs/${blog.id}`}>
-              {blog.title}
-            </Link>
+                  <Link key={blog.id} to={`/blogs/${blog.id}`}>
+                    {blog.title}
+                  </Link>
                 </td>
                 <td>
                   {blog.author}
                 </td>
               </tr>
-          /*<Blog key={i}
+              /*<Blog key={i}
               blog={blog}
               toggleView={() => toggleViewOf(blog.id)}
               addLike={() => addLike(blog.id)}
               user={user}
               deleteBlog={() => deleteBlog(blog.id)}
               ref={blogRef}/>*/
-             )}
-            </tbody>
-          </Table>
+            )}
+          </tbody>
+        </Table>
       </div>
     )
   }
@@ -273,7 +276,10 @@ const App = () => {
         </Route>
         <Route path='/blogs/:id'>
           {console.log('app.js', blogToShow)}
-          <Blog blog={blogToShow} addLike={() => addLike(blogToShow.id)}/>
+          <Blog
+            blog={blogToShow}
+            addLike={() => addLike(blogToShow.id)}
+            deleteBlog={() => deleteBlog(blogToShow.id)}/>
         </Route>
         <Route path='/blogs'>
           <Blogs blogs={blogsSortedByLikes}/>

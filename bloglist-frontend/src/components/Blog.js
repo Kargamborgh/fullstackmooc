@@ -28,6 +28,7 @@ const Blog = React.forwardRef(({ blog, addLike, deleteBlog, user }, ref) => {
       <div>
       added by: {blog.user.name}
       </div>
+      <button onClick={deleteBlog} className='deleteButton'>delete</button>
       <div>
         comments:
         <ul>
