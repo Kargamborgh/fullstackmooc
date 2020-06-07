@@ -23,18 +23,9 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [users, setUsers] = useState(null)
   const blogFormRef = React.createRef()
-  const blogRef = React.createRef()
 
   const padding = {
     padding : 5
-  }
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
   }
 
 
@@ -120,10 +111,6 @@ const App = () => {
     </Togglable>
   )
 
-  const toggleViewOf = id => {
-    blogRef.current.toggleView()
-  }
-
   const addLike = async id => {
     const blog = blogs.find(b => b.id === id)
     const likedBlog = { ...blog, likes : blog.likes + 1, user: user.id }
@@ -170,20 +157,30 @@ const App = () => {
     }
   }
 
-  const Users = ({ users }) => (
-    <div>
-      <h3>Users</h3>
-      {console.log(users)}
-      <ul>
-        {users.map(user =>
-          <li key={user.id}>
-            <Link to={`/users/${user.id}`}>{user.name} </Link>
-             blogs created: {user.blogs.length}
-          </li>
-        )}
-      </ul>
-    </div>
-  )
+  const Users = ({ users }) => {
+    if (!users) {
+      return null
+    }
+    return (
+      <div>
+        <h3>Users</h3>
+        <Table striped>
+          <tbody>
+            {users.map(user =>
+              <tr key={user.id}>
+                <td>
+                  <Link to={`/users/${user.id}`}>{user.name} </Link>
+                </td>
+                <td>
+                  {user.blogs.length} blogs created
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </div>
+    )
+  }
 
   const matchUser = useRouteMatch('/users/:id')
   const userToShow = matchUser
@@ -275,7 +272,6 @@ const App = () => {
           <Users users={users} />
         </Route>
         <Route path='/blogs/:id'>
-          {console.log('app.js', blogToShow)}
           <Blog
             blog={blogToShow}
             addLike={() => addLike(blogToShow.id)}
