@@ -10,8 +10,7 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { renderNotification, hideNotification } from './reducers/notificationReducer'
 import {
-  BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
 
 const App = () => {
@@ -166,12 +165,38 @@ const App = () => {
       <ul>
         {users.map(user =>
           <li key={user.id}>
-            {user.name} --- blogs created: {user.blogs.length}
+            <Link to={`/users/${user.id}`}>{user.name}</Link>
+            --- blogs created: {user.blogs.length}
           </li>
         )}
       </ul>
     </div>
   )
+
+  const match = useRouteMatch('/users/:id')
+  const userToShow = match
+    ? users.find(user => user.id === match.params.id)
+    : null
+
+  const User = ({ user }) => {
+    if (!user) {
+      return null
+    }
+
+    return (
+      <div>
+        <h2>{user.name}</h2>
+        <h3>added blogs:</h3>
+        <ul>
+          {user.blogs.map(blog =>
+            <li key={blog.id}>
+              {blog.title}
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -195,17 +220,18 @@ const App = () => {
           )}
         </div>
       }
-      <Router>
-        <div>
-          <Link style={padding} to='/users'>users</Link>
-        </div>
+      <div>
+        <Link style={padding} to='/users'>users</Link>
+      </div>
 
-        <Switch>
-          <Route path='/users'>
-            <Users users={users} />
-          </Route>
-        </Switch>
-      </Router>
+      <Switch>
+        <Route path='/users/:id'>
+          <User user={userToShow}/>
+        </Route>
+        <Route path='/users'>
+          <Users users={users} />
+        </Route>
+      </Switch>
     </div>
   )
 }
