@@ -251,6 +251,7 @@ const App = () => {
       <div>
         <Link style={padding} to='/users'>users</Link>
         <Link style={padding} to='/blogs'>blogs</Link>
+        <Link style={padding} to='/'>home</Link>
       </div>
 
       <Switch>
@@ -266,6 +267,8 @@ const App = () => {
         </Route>
         <Route path='/blogs'>
           <Blogs blogs={blogsSortedByLikes}/>
+        </Route>
+        <Route path='/'>
         </Route>
       </Switch>
     </div>
