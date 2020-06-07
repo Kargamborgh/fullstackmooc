@@ -12,6 +12,7 @@ import { renderNotification, hideNotification } from './reducers/notificationRed
 import {
   Switch, Route, Link, useRouteMatch
 } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -218,12 +219,19 @@ const App = () => {
     return (
       <div>
         <h2>blogs</h2>
-        {blogs.map((blog, i) =>
-          <div style={blogStyle} key={blog.id}>
+        <Table striped>
+          <tbody>
+            {blogs.map((blog, i) =>
+              <tr key={blog.id}>
+                <td>
             <Link key={blog.id} to={`/blogs/${blog.id}`}>
-              {blog.title} {blog.author}
+              {blog.title}
             </Link>
-          </div>
+                </td>
+                <td>
+                  {blog.author}
+                </td>
+              </tr>
           /*<Blog key={i}
               blog={blog}
               toggleView={() => toggleViewOf(blog.id)}
@@ -231,13 +239,15 @@ const App = () => {
               user={user}
               deleteBlog={() => deleteBlog(blog.id)}
               ref={blogRef}/>*/
-        )}
+             )}
+            </tbody>
+          </Table>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Blog App</h1>
       <Notification />
       {user === null ?
